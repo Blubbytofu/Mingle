@@ -34,6 +34,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float jumpCooldownTime;
     private bool isJumping;
 
+    [Header(" ******** Player States ********")]
+    [SerializeField] private PlayerMoveState playerMoveState;
+
     private void Start()
     {
         strafeInputDirection = new Vector2Int();
@@ -44,6 +47,12 @@ public class PlayerMove : MonoBehaviour
         HandleMovementInput();
         HandleJump();
         AdjustMovementPhysics();
+        ChangePlayerMoveState();
+    }
+
+    public PlayerMoveState GetPlayerMoveState()
+    {
+        return playerMoveState;
     }
 
     private void HandleMovementInput()
@@ -159,6 +168,24 @@ public class PlayerMove : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void ChangePlayerMoveState()
+    {
+        if (!isGrounded)
+        {
+            playerMoveState = PlayerMoveState.AIRBORNE;
+            return;
+        }
+
+        if (strafeInputDirection.Equals(Vector2Int.zero))
+        {
+            playerMoveState = PlayerMoveState.STILL;
+        }
+        else
+        {
+            playerMoveState = PlayerMoveState.RUNNING;
         }
     }
 

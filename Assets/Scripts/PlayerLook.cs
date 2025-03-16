@@ -3,28 +3,32 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] Transform orientation;
-    [SerializeField] Transform eyes;
-    [SerializeField] Camera playerCamera;
+    [SerializeField] private Transform orientation;
+    [SerializeField] private Transform eyes;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Camera weaponCamera;
 
     [Header("Player Settings")]
-    [SerializeField] float sensitivityX;
-    [SerializeField] float sensitivityY;
-    [SerializeField] float sensitivityMultiplier;
-    [SerializeField] int fieldOfView;
+    [SerializeField] private float sensitivityX;
+    [SerializeField] private float sensitivityY;
+    [SerializeField] private float sensitivityMultiplier;
+    [SerializeField] private int fieldOfView;
+    [SerializeField] private int weaponFieldOfView;
 
-    float rawInputX;
-    float rawInputY;
-    float rotationX;
-    float rotationY;
+    private float rawInputX;
+    private float rawInputY;
+    private float rotationX;
+    private float rotationY;
 
     [Header("Look Limits")]
-    [SerializeField] int maxVerticalLookAngle;
+    [SerializeField] private int maxVerticalLookAngle;
 
     private void Start()
     {
         playerCamera.fieldOfView = fieldOfView;
-        Cursor.lockState = CursorLockMode.None;
+        weaponCamera.fieldOfView = weaponFieldOfView;
+        // change it to none after done testing
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
